@@ -16,8 +16,6 @@ on:
 jobs:
   sample-job:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    concurrency: ${{ inputs.environment }}
     steps:
       - run: echo "it works"
   release:
