@@ -1,5 +1,5 @@
 name: Deployment created
-run-name: ${{ inputs.environment }} - config v${{ inputs.config_version }}
+run-name: ${{ github.event.deployment.environment }} - test
 
 on:
   deployment
@@ -7,7 +7,7 @@ on:
 jobs:
   sample-job:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    concurrency: ${{ inputs.environment }}
+    environment: ${{ github.event.deployment.environment }}
+    concurrency: ${{ github.event.deployment.environment }}
     steps:
       - run: echo "it works"
