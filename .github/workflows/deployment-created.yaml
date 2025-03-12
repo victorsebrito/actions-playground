@@ -1,0 +1,13 @@
+name: Deployment created
+run-name: ${{ inputs.environment }} - config v${{ inputs.config_version }}
+
+on:
+  deployment
+
+jobs:
+  sample-job:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency: ${{ inputs.environment }}
+    steps:
+      - run: echo "it works"

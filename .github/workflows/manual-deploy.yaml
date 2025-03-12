@@ -1,0 +1,32 @@
+name: Deploy
+run-name: ${{ inputs.environment }} - config v${{ inputs.config_version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        type: environment
+        required: true
+      config_version:
+        description: "Config version"
+        required: true
+        type: string
+
+jobs:
+  sample-job:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    concurrency: ${{ inputs.environment }}
+    steps:
+      - run: echo "it works"
+  release:
+    needs: [sample-job]
+    steps:
+      - uses: avakar/create-deployment@v1
+        with:
+          auto_merge: false
+          environment: ${{ inputs.environment }}
+          description: this is the description - v${{ inputs.config_version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
